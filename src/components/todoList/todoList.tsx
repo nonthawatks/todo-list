@@ -4,6 +4,7 @@ import { ModelTodoItem } from "@/models/ModelTodoItems";
 import Button from "../commons/button";
 import TodoTable from "./todoTable";
 import { useState } from "react";
+import Header from "../commons/header";
 
 const TodoList = () => {
   const [items, setItems] = useState<ModelTodoItem[]>(TODO_ITEMS);
@@ -17,6 +18,11 @@ const TodoList = () => {
     setSelectedItems([...selectedItems, item]);
     items.splice(index, 1);
     setItems([...items]);
+
+    //remove item after selected
+    setTimeout(() => {
+      handleRemoveItem(item);
+    }, 5000);
   };
 
   const handlePopItem = () => {
@@ -26,16 +32,22 @@ const TodoList = () => {
   };
 
   const handleRemoveItem = (removeItem: ModelTodoItem) => {
-    const index = selectedItems.findIndex(
-      (item: ModelTodoItem) => item === removeItem
-    );
-    selectedItems.splice(index, 1);
-    setItems([...items, removeItem]);
+    setSelectedItems((prevSelectedItems) => {
+      const index = prevSelectedItems.findIndex(
+        (item: ModelTodoItem) => item === removeItem
+      );
+      
+      if (index === -1) return prevSelectedItems; // return if not found
+      prevSelectedItems.splice(index, 1);
+      setItems((prevItems) => [...prevItems, removeItem]);
+
+      return prevSelectedItems;
+    });
   };
 
   return (
     <>
-      <div>Todo List</div>
+      <Header title="Todo List" />
       <div className="grid grid-cols-3 gap-4">
         <div className="flex flex-col gap-2">
           {items.map((item: ModelTodoItem, index: number) => {

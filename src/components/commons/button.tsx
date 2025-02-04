@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = (props: ButtonProps) => {
-  const { variant = "outlined" } = props;
+  const { variant = "outlined", className } = props;
   const styledButton = (variant: ButtonProps["variant"]) => {
     switch (variant) {
       case "outlined":
@@ -19,9 +19,7 @@ const Button = (props: ButtonProps) => {
       {...props}
       className={`${styledButton(
         variant
-      )}  p-3 rounded-sm shadow-md active:shadow-none select-none ${
-        props.className
-      }`}
+      )}  p-3 rounded-sm shadow-md active:shadow-none select-none ${className}`}
     />
   );
 };
