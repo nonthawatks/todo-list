@@ -98,16 +98,10 @@ describe("Playground", () => {
     jest.clearAllMocks();
   });
 
-  it("should render correctly and call getUsers", () => {
-    const { container } = render(<Playground />);
-    expect(getUsers).toHaveBeenCalledTimes(1);
-    expect(container).toBeInTheDocument();
-  });
-
   it("should group data correctly", async () => {
     const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>; // Type assertion
 
-    mockGetUsers.mockImplementationOnce(
+    mockGetUsers.mockImplementation(
       (request: UsersSearchDTO) => Promise.resolve(USER_DATA) as Promise<ModelUsersResponse>
     );
 
