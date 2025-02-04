@@ -6,8 +6,8 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import Home from "../src/components/todoList/todoList";
-import TodoList from "../src/components/todoList/todoList";
+import Home from "../../../src/components/todoList/todoList";
+import TodoList from "../../../src/components/todoList/todoList";
 import { TODO_ITEMS } from "@/helpers/constant";
 
 describe("Todo List", () => {

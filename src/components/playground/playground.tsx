@@ -105,11 +105,11 @@ const Playground = () => {
     <div>
       <Header title="Playground" />
       {isLoading ? (
-        <div>Loading Users Data...</div>
+        <div  data-testid="loading-users-data">Loading Users Data...</div>
       ) : (
         <>
           <div>Users Data is : </div>
-          <div>
+          <div data-testid="json-users-data">
             <pre>{JSON.stringify(userData, null, 2)}</pre>
           </div>
         </>
