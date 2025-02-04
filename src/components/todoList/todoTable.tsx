@@ -18,6 +18,7 @@ const TodoTable = (props: TodoTableProps) => {
         {items.map((item: ModelTodoItem, index: number) => {
           return (
             <Button
+              data-testid={`todo-item-${title}`}
               key={index}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
