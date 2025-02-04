@@ -52,7 +52,7 @@ const TodoList = () => {
         <div className="flex flex-col gap-2">
           {items.map((item: ModelTodoItem, index: number) => {
             return (
-              <Button key={index} onClick={() => handleSelectitem(item, index)}>
+              <Button data-testid="todo-item" key={index} onClick={() => handleSelectitem(item, index)}>
                 {item.name}
               </Button>
             );
