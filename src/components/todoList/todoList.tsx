@@ -1,20 +1,63 @@
+"use client";
 import { TODO_ITEMS } from "@/helpers/constant";
 import { ModelTodoItem } from "@/models/ModelTodoItems";
 import Button from "../commons/button";
 import TodoTable from "./todoTable";
+import { useState } from "react";
 
 const TodoList = () => {
+  const [items, setItems] = useState<ModelTodoItem[]>(TODO_ITEMS);
+  const [selectedItems, setSelectedItems] = useState<ModelTodoItem[]>([]);
+
+  const getItemsByType = (type: string) => {
+    return selectedItems.filter((item: ModelTodoItem) => item.type === type);
+  };
+
+  const handleSelectitem = (item: ModelTodoItem, index: number) => {
+    setSelectedItems([...selectedItems, item]);
+    items.splice(index, 1);
+    setItems([...items]);
+  };
+
+  const handlePopItem = () => {
+    const item = selectedItems.pop();
+    setSelectedItems([...selectedItems]);
+    if (item) setItems([...items, item]);
+  };
+
+  const handleRemoveItem = (removeItem: ModelTodoItem) => {
+    const index = selectedItems.findIndex(
+      (item: ModelTodoItem) => item === removeItem
+    );
+    selectedItems.splice(index, 1);
+    setItems([...items, removeItem]);
+  };
+
   return (
     <>
       <div>Todo List</div>
       <div className="grid grid-cols-3 gap-4">
         <div className="flex flex-col gap-2">
-          {TODO_ITEMS.map((item: ModelTodoItem, index: number) => {
-            return <Button key={index}>{item.name}</Button>;
+          {items.map((item: ModelTodoItem, index: number) => {
+            return (
+              <Button key={index} onClick={() => handleSelectitem(item, index)}>
+                {item.name}
+              </Button>
+            );
           })}
         </div>
-        <TodoTable title="Fruit" items={TODO_ITEMS} />
-        <TodoTable title="Vegetable" items={TODO_ITEMS} />
+        <TodoTable
+          title="Fruit"
+          handlePopItem={handlePopItem}
+          items={getItemsByType("Fruit")}
+          handleRemoveItem={handleRemoveItem}
+        />
+        <TodoTable
+          title="Vegetable"
+          handlePopItem={handlePopItem}
+          items={getItemsByType("Vegetable")}
+          handleRemoveItem={handleRemoveItem}
+        />
       </div>
     </>
   );
